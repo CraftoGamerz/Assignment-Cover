@@ -8,16 +8,23 @@ type Subject = {
   code: string;
 };
 
-type CoverTheme = 'minimal' | 'editorial' | 'frame';
+type CoverTheme = 'minimal' | 'editorial' | 'frame' | 'ribbon' | 'ledger';
 type SortMode = 'student' | 'subject';
 
 type Settings = {
   names: string;
   collegeIds: string;
   rolls: string;
+  sections: string;
+  groups: string;
   stream: string;
   year: string;
   academicYear: string;
+  collegeName: string;
+  assignmentLabel: string;
+  submissionNote: string;
+  submittedByLabel: string;
+  leftMargin: number;
   subjects: Subject[];
   assignments: number[];
   theme: CoverTheme;
@@ -30,6 +37,8 @@ type Cover = {
   name: string;
   collegeId: string;
   roll: string;
+  section: string;
+  group: string;
   subject: Subject;
   assignment: number;
 };
@@ -40,9 +49,16 @@ const DEFAULTS: Settings = {
   names: 'Abusina Hossain',
   collegeIds: 'JIS/2025/0611',
   rolls: '05',
+  sections: '',
+  groups: '',
   stream: 'CSE (AIML)',
   year: '2nd Year',
   academicYear: '2025–26',
+  collegeName: 'JIS College of Engineering',
+  assignmentLabel: 'Assignment',
+  submissionNote: 'Prepared for academic submission',
+  submittedByLabel: 'Submitted by',
+  leftMargin: 0,
   subjects: [{ id: 'physics', name: 'Physics', code: 'PH101' }],
   assignments: [1, 2],
   theme: 'minimal',
@@ -69,10 +85,14 @@ function makeCovers(settings: Settings): Cover[] {
   const names = splitList(settings.names);
   const ids = splitList(settings.collegeIds);
   const rolls = splitList(settings.rolls);
+  const sections = splitList(settings.sections);
+  const groups = splitList(settings.groups);
   const students = (names.length ? names : ['Student name']).map((name, index) => ({
     name,
     collegeId: valueAt(ids, index),
     roll: valueAt(rolls, index),
+    section: valueAt(sections, index),
+    group: valueAt(groups, index),
   }));
   const subjects = settings.subjects.filter((subject) => subject.name.trim() || subject.code.trim());
   const assignments = settings.assignments.length ? [...settings.assignments].sort() : [1];
@@ -100,7 +120,11 @@ function makeCovers(settings: Settings): Cover[] {
 }
 
 function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
-  const pageStyle = { '--page-accent': settings.accent } as CSSProperties;
+  const safeLeftMargin = Math.max(0, Math.min(settings.leftMargin || 0, 18));
+  const pageStyle = {
+    '--page-accent': settings.accent,
+    '--binding-offset': `${(safeLeftMargin / 210) * 100}%`,
+  } as CSSProperties;
   const subjectName = cover.subject.name.trim() || 'Untitled Subject';
   const paperCode = cover.subject.code.trim() || '—';
 
@@ -109,35 +133,37 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
       <div className="cover-orbit" aria-hidden="true"><span /></div>
       <div className="cover-rule" aria-hidden="true" />
       <header className="cover-header">
-        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/jis-college-logo.svg`} alt="JIS College of Engineering" />
+        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/jis-college-logo.svg`} alt={settings.collegeName || 'College logo'} />
         <div className="academic-chip">Academic year {settings.academicYear || '2025–26'}</div>
       </header>
 
       <section className="cover-hero">
-        <div className="assignment-label">Assignment</div>
+        <div className="assignment-label">{settings.assignmentLabel || 'Assignment'}</div>
         <div className="assignment-index">{String(cover.assignment).padStart(2, '0')}</div>
         <h2>{subjectName}</h2>
         <div className="paper-chip">{paperCode}</div>
       </section>
 
       <section className="cover-centerpiece" aria-label="Academic submission details">
-        <div className="center-mark" aria-hidden="true"><span>J</span><i /></div>
+        <div className="center-mark" aria-hidden="true"><span>{(settings.collegeName.trim()[0] || 'J').toUpperCase()}</span><i /></div>
         <div className="center-copy">
-          <span>Prepared for academic submission</span>
+          <span>{settings.submissionNote || 'Prepared for academic submission'}</span>
           <strong>{settings.year} · {settings.academicYear || '2025–26'}</strong>
-          <small>{settings.stream || 'Stream'} · JIS College of Engineering</small>
+          <small>{settings.stream || 'Stream'} · {settings.collegeName || 'College'}</small>
         </div>
-        <div className="center-count" aria-hidden="true"><span>A</span>{cover.assignment}</div>
+        <div className="center-count" aria-label={`Assignment number ${cover.assignment}`}>{String(cover.assignment).padStart(2, '0')}</div>
       </section>
 
       <section className="identity-card" aria-label="Student details">
         <div className="identity-heading">
-          <span>Submitted by</span>
+          <span>{settings.submittedByLabel || 'Submitted by'}</span>
           <small>{settings.year} · {settings.stream || 'Stream'}</small>
         </div>
         <dl>
           <div><dt>Name</dt><dd>{cover.name}</dd></div>
           <div><dt>Stream</dt><dd>{settings.stream || '—'}</dd></div>
+          <div><dt>Section</dt><dd>{cover.section || '—'}</dd></div>
+          <div><dt>Group number</dt><dd>{cover.group || '—'}</dd></div>
           <div><dt>College ID</dt><dd>{cover.collegeId || '—'}</dd></div>
           <div><dt>Roll number</dt><dd>{cover.roll || '—'}</dd></div>
           <div><dt>Paper code</dt><dd>{paperCode}</dd></div>
@@ -145,9 +171,10 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
       </section>
 
       <footer className="cover-footer">
-        <span>JIS College of Engineering</span>
-        <span>Assignment {cover.assignment}</span>
+        <span>{settings.collegeName || 'College'}</span>
+        <span>{settings.assignmentLabel || 'Assignment'} {cover.assignment}</span>
       </footer>
+      <div className="cover-watermark" aria-label="COCFUN watermark"><strong>COCFUN</strong><span>cover craft</span></div>
     </article>
   );
 }
@@ -266,6 +293,14 @@ export default function Home() {
                 <input value={settings.rolls} onChange={(event) => update('rolls', event.target.value)} placeholder="05, 06" />
               </label>
               <label className="field">
+                <span>Sections <em>in order</em></span>
+                <input value={settings.sections} onChange={(event) => update('sections', event.target.value)} placeholder="A, B" />
+              </label>
+              <label className="field">
+                <span>Group numbers <em>in order</em></span>
+                <input value={settings.groups} onChange={(event) => update('groups', event.target.value)} placeholder="1, 2" />
+              </label>
+              <label className="field">
                 <span>Stream</span>
                 <input value={settings.stream} onChange={(event) => update('stream', event.target.value)} placeholder="CSE (AIML)" />
               </label>
@@ -312,6 +347,8 @@ export default function Home() {
                 ['minimal', 'Minimal'],
                 ['editorial', 'Editorial'],
                 ['frame', 'Frame'],
+                ['ribbon', 'Ribbon'],
+                ['ledger', 'Ledger'],
               ] as [CoverTheme, string][]).map(([value, label]) => (
                 <button key={value} type="button" aria-pressed={settings.theme === value} onClick={() => update('theme', value)}>
                   <i className={`theme-icon theme-icon-${value}`} /><span>{label}</span>
@@ -340,6 +377,34 @@ export default function Home() {
                 </select>
               </label>
             </div>
+          </section>
+
+          <section className="form-section meta-section">
+            <div className="section-title"><span>04</span><div><h2>Page text & margins</h2><p>Fine-tune institution labels and binding space.</p></div></div>
+            <div className="field-grid">
+              <label className="field field-wide">
+                <span>College / institution name</span>
+                <input value={settings.collegeName} onChange={(event) => update('collegeName', event.target.value)} placeholder="JIS College of Engineering" />
+              </label>
+              <label className="field">
+                <span>Document label</span>
+                <input value={settings.assignmentLabel} onChange={(event) => update('assignmentLabel', event.target.value)} placeholder="Assignment" />
+              </label>
+              <label className="field">
+                <span>Student section label</span>
+                <input value={settings.submittedByLabel} onChange={(event) => update('submittedByLabel', event.target.value)} placeholder="Submitted by" />
+              </label>
+              <label className="field field-wide">
+                <span>Center note</span>
+                <input value={settings.submissionNote} onChange={(event) => update('submissionNote', event.target.value)} placeholder="Prepared for academic submission" />
+              </label>
+              <label className="margin-control field-wide">
+                <span><strong>Left binding margin</strong><output>{settings.leftMargin || 0} mm</output></span>
+                <input type="range" min="0" max="18" step="1" value={settings.leftMargin || 0} onChange={(event) => update('leftMargin', Number(event.target.value))} />
+                <small>Moves printed content right without changing the A4 page size.</small>
+              </label>
+            </div>
+            <div className="watermark-note"><span>COCFUN</span><p>A tiny, low-contrast watermark is kept intentionally quiet on every page.</p></div>
           </section>
 
           <div className="editor-footer">
