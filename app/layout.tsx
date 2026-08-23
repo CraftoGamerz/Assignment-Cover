@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('https://jis-assignment-cover-studio.ashim077.chatgpt.site'),
   title: 'JIS Assignment Cover Studio',
   description: 'Create polished, print-ready assignment front pages for JIS College of Engineering.',
   icons: { icon: '/jis-college-logo.svg' },
