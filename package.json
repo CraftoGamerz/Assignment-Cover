@@ -1,23 +1,31 @@
 {
+  "homepage": "https://CraftoGamerz.github.io/Assignment-Cover/",
   "name": "sites-project",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CraftoGamerz/Assignment-Cover.git"
+  },
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
     "dev": "node ./node_modules/vinext/dist/cli.js dev",
     "build": "node ./node_modules/vinext/dist/cli.js build",
+    "build:github": "node ./scripts/build-github.mjs",
+    "deploy:github": "node ./scripts/deploy-github.mjs",
     "start": "node ./node_modules/vinext/dist/cli.js start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
   },
   "dependencies": {
-    "next": "16.2.6",
-    "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "gh-pages": "^6.3.0",
+    "next": "^16.3.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/vite-plugin": "^1.53.1",
     "@cloudflare/workers-types": "4.20260515.1",
     "@openai/sites-vite-plugin": "^0.1.0 || ^0.2.0",
     "@tailwindcss/postcss": "4.2.1",
@@ -25,14 +33,14 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
-    "@vitejs/plugin-rsc": "0.5.26",
+    "@vitejs/plugin-rsc": "^0.5.34",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
-    "react-server-dom-webpack": "19.2.6",
+    "react-server-dom-webpack": "^19.2.8",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
-    "vinext": "1.0.0-beta.3",
-    "vite": "8.0.13",
+    "vinext": "^1.0.0-beta.8",
+    "vite": "^8.2.2",
     "wrangler": "4.92.0"
   },
   "type": "module"

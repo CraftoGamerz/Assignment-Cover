@@ -109,7 +109,7 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
       <div className="cover-orbit" aria-hidden="true"><span /></div>
       <div className="cover-rule" aria-hidden="true" />
       <header className="cover-header">
-        <img src="/jis-college-logo.svg" alt="JIS College of Engineering" />
+        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/jis-college-logo.svg`} alt="JIS College of Engineering" />
         <div className="academic-chip">Academic year {settings.academicYear || '2025–26'}</div>
       </header>
 
@@ -118,6 +118,16 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
         <div className="assignment-index">{String(cover.assignment).padStart(2, '0')}</div>
         <h2>{subjectName}</h2>
         <div className="paper-chip">{paperCode}</div>
+      </section>
+
+      <section className="cover-centerpiece" aria-label="Academic submission details">
+        <div className="center-mark" aria-hidden="true"><span>J</span><i /></div>
+        <div className="center-copy">
+          <span>Prepared for academic submission</span>
+          <strong>{settings.year} · {settings.academicYear || '2025–26'}</strong>
+          <small>{settings.stream || 'Stream'} · JIS College of Engineering</small>
+        </div>
+        <div className="center-count" aria-hidden="true"><span>A</span>{cover.assignment}</div>
       </section>
 
       <section className="identity-card" aria-label="Student details">

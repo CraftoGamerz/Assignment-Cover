@@ -155,21 +155,31 @@ button { color: inherit; }
 .cover-rule { position: absolute; left: 0; top: 0; width: 4px; height: 100%; background: var(--page-accent); opacity: 0; }
 .cover-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 7%; position: relative; z-index: 2; }
 .cover-header img { width: 48%; height: auto; object-fit: contain; }
-.academic-chip { padding-top: .7%; color: var(--page-accent); font-size: 1.18cqw; font-weight: 720; letter-spacing: .1em; text-transform: uppercase; text-align: right; }
-.cover-hero { margin-top: 15%; position: relative; z-index: 2; }
-.assignment-label { font-size: 2.2cqw; font-weight: 660; letter-spacing: .01em; }
+.academic-chip { padding-top: .7%; color: var(--page-accent); font-size: 1.42cqw; font-weight: 720; letter-spacing: .1em; text-transform: uppercase; text-align: right; }
+.cover-hero { margin-top: 12%; position: relative; z-index: 2; }
+.assignment-label { font-size: 2.65cqw; font-weight: 660; letter-spacing: .01em; }
 .assignment-index { position: absolute; right: 0; top: -48%; color: color-mix(in srgb, var(--page-accent) 9%, white); font-size: 18cqw; line-height: .82; font-weight: 780; letter-spacing: -.09em; }
-.cover-hero h2 { margin: 2.5% 0 0; max-width: 78%; font-size: 6.5cqw; line-height: 1.02; letter-spacing: -.055em; overflow-wrap: anywhere; }
-.paper-chip { display: inline-block; margin-top: 4.5%; color: var(--muted); border: 1px solid #dfe5e2; border-radius: 999px; padding: 1.25% 2.1%; font-size: 1.4cqw; font-weight: 660; letter-spacing: .05em; }
+.cover-hero h2 { margin: 2.5% 0 0; max-width: 82%; font-size: 7.35cqw; line-height: 1.01; letter-spacing: -.055em; overflow-wrap: anywhere; }
+.paper-chip { display: inline-block; margin-top: 4%; color: var(--muted); border: 1px solid #dfe5e2; border-radius: 999px; padding: 1.35% 2.35%; font-size: 1.68cqw; font-weight: 680; letter-spacing: .05em; }
+.cover-centerpiece { margin: 8.5% 0 0; min-height: 16%; padding: 3.5% 3.8%; border-top: 1px solid color-mix(in srgb, var(--page-accent) 38%, #dfe5e2); border-bottom: 1px solid #e8ecea; display: grid; grid-template-columns: 10% 1fr auto; gap: 4%; align-items: center; position: relative; z-index: 2; }
+.center-mark { align-self: stretch; min-height: 100%; background: color-mix(in srgb, var(--page-accent) 10%, white); display: grid; place-items: center; position: relative; overflow: hidden; }
+.center-mark span { color: var(--page-accent); font-size: 3.6cqw; font-weight: 780; letter-spacing: -.06em; }
+.center-mark i { position: absolute; width: 70%; height: 3px; background: var(--page-accent); left: 0; bottom: 0; }
+.center-copy { display: grid; gap: .65cqw; }
+.center-copy > span { color: var(--page-accent); font-size: 1.15cqw; font-weight: 720; letter-spacing: .105em; text-transform: uppercase; }
+.center-copy strong { font-size: 2.05cqw; letter-spacing: -.02em; }
+.center-copy small { color: var(--muted); font-size: 1.25cqw; }
+.center-count { color: var(--page-accent); font-size: 4cqw; line-height: 1; font-weight: 760; letter-spacing: -.06em; }
+.center-count span { display: block; color: var(--muted); font-size: 1.05cqw; letter-spacing: .08em; text-align: right; }
 .identity-card { margin-top: auto; padding-top: 4.8%; border-top: 1px solid #dfe5e2; position: relative; z-index: 2; }
 .identity-heading { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3.7%; }
-.identity-heading > span { font-size: 1.8cqw; font-weight: 720; }
-.identity-heading small { color: var(--page-accent); font-size: 1.17cqw; font-weight: 680; letter-spacing: .07em; text-transform: uppercase; }
+.identity-heading > span { font-size: 2.05cqw; font-weight: 720; }
+.identity-heading small { color: var(--page-accent); font-size: 1.32cqw; font-weight: 680; letter-spacing: .07em; text-transform: uppercase; }
 .identity-card dl { margin: 0; display: grid; gap: 2.6cqw; max-width: 80%; }
 .identity-card dl > div { display: grid; grid-template-columns: 28% 1fr; align-items: baseline; gap: 3%; }
-.identity-card dt { color: var(--muted); font-size: 1.25cqw; text-transform: uppercase; letter-spacing: .08em; }
-.identity-card dd { margin: 0; font-size: 1.65cqw; font-weight: 650; overflow-wrap: anywhere; }
-.cover-footer { margin-top: 6%; display: flex; justify-content: space-between; color: #969d9a; font-size: 1.05cqw; letter-spacing: .035em; }
+.identity-card dt { color: var(--muted); font-size: 1.42cqw; text-transform: uppercase; letter-spacing: .08em; }
+.identity-card dd { margin: 0; font-size: 1.92cqw; font-weight: 650; overflow-wrap: anywhere; }
+.cover-footer { margin-top: 5%; display: flex; justify-content: space-between; color: #969d9a; font-size: 1.2cqw; letter-spacing: .035em; }
 
 .theme-editorial { padding-left: 12.5%; }
 .theme-editorial .cover-rule { opacity: 1; width: 3.2%; }
@@ -178,6 +188,10 @@ button { color: inherit; }
 .theme-editorial .cover-hero { margin-top: 18%; }
 .theme-editorial .assignment-index { color: var(--page-accent); opacity: .13; right: -2%; }
 .theme-editorial .paper-chip { color: white; background: var(--page-accent); border-color: var(--page-accent); border-radius: 2px; }
+.theme-editorial .cover-centerpiece { margin-left: -4%; padding-left: 4%; background: color-mix(in srgb, var(--page-accent) 5%, white); border-bottom-color: color-mix(in srgb, var(--page-accent) 18%, #e8ecea); }
+.theme-editorial .center-mark { background: var(--page-accent); }
+.theme-editorial .center-mark span { color: white; }
+.theme-editorial .center-mark i { background: white; }
 
 .theme-frame::after { content: ''; position: absolute; inset: 3.1%; border: 1px solid color-mix(in srgb, var(--page-accent) 45%, #dfe5e2); pointer-events: none; }
 .theme-frame .cover-orbit { width: 8%; aspect-ratio: 1; right: 7%; top: 8%; border: 0; border-radius: 2px; background: var(--page-accent); transform: rotate(45deg); }
@@ -187,6 +201,7 @@ button { color: inherit; }
 .theme-frame .identity-card { padding: 4.2%; border: 1px solid #dfe5e2; }
 .theme-frame .identity-card dl { max-width: 90%; }
 .theme-frame .cover-footer { padding: 0 1%; }
+.theme-frame .cover-centerpiece { border: 1px solid color-mix(in srgb, var(--page-accent) 30%, #dfe5e2); }
 
 .empty-preview { max-width: 794px; min-height: 440px; margin: 34px auto; border: 1px dashed #cbd1ce; border-radius: 18px; display: grid; place-content: center; justify-items: center; text-align: center; color: var(--muted); }
 .empty-preview > span { width: 40px; height: 40px; border-radius: 50%; background: #dde2df; display: grid; place-items: center; font-size: 20px; }

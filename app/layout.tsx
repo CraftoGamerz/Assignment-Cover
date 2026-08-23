@@ -12,22 +12,26 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const publicOrigin = process.env.GITHUB_PAGES === 'true'
+  ? 'https://CraftoGamerz.github.io/Assignment-Cover'
+  : 'https://jis-assignment-cover-studio.ashim077.chatgpt.site';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jis-assignment-cover-studio.ashim077.chatgpt.site'),
+  metadataBase: new URL(`${publicOrigin}/`),
   title: 'JIS Assignment Cover Studio',
   description: 'Create polished, print-ready assignment front pages for JIS College of Engineering.',
-  icons: { icon: '/jis-college-logo.svg' },
+  icons: { icon: `${publicOrigin}/jis-college-logo.svg` },
   openGraph: {
     type: 'website',
     title: 'JIS Assignment Cover Studio',
     description: 'Create every assignment cover in one go.',
-    images: [{ url: '/og.png', width: 1731, height: 909, alt: 'JIS Assignment Cover Studio' }],
+    images: [{ url: `${publicOrigin}/og.png`, width: 1731, height: 909, alt: 'JIS Assignment Cover Studio' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'JIS Assignment Cover Studio',
     description: 'Create every assignment cover in one go.',
-    images: ['/og.png'],
+    images: [`${publicOrigin}/og.png`],
   },
 };
 
