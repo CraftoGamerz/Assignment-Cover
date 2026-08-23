@@ -15,6 +15,7 @@ const publish = run([
   'https://github.com/CraftoGamerz/Assignment-Cover.git',
   '--branch',
   'gh-pages',
+  '--nojekyll',
   '--message',
   'Deploy assignment cover generator',
 ]);
