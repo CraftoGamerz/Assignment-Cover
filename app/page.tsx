@@ -25,6 +25,7 @@ type Settings = {
   submissionNote: string;
   submittedByLabel: string;
   leftMargin: number;
+  fontScale: number;
   subjects: Subject[];
   assignments: number[];
   theme: CoverTheme;
@@ -58,7 +59,8 @@ const DEFAULTS: Settings = {
   assignmentLabel: 'Assignment',
   submissionNote: 'Prepared for academic submission',
   submittedByLabel: 'Submitted by',
-  leftMargin: 0,
+  leftMargin: 25.4,
+  fontScale: 100,
   subjects: [{ id: 'physics', name: 'Physics', code: 'PH101' }],
   assignments: [1, 2],
   theme: 'minimal',
@@ -120,24 +122,42 @@ function makeCovers(settings: Settings): Cover[] {
 }
 
 function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
-  const safeLeftMargin = Math.max(0, Math.min(settings.leftMargin || 0, 18));
+  const safeLeftMargin = Math.max(12, Math.min(settings.leftMargin || 25.4, 40));
+  const safeFontScale = Math.max(80, Math.min(settings.fontScale || 100, 120)) / 100;
   const pageStyle = {
     '--page-accent': settings.accent,
-    '--binding-offset': `${(safeLeftMargin / 210) * 100}%`,
+    '--page-left-margin': `${safeLeftMargin}mm`,
+    '--fs-xs': `${(0.78 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-sm': `${(1.05 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-meta': `${(1.15 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-footer': `${(1.2 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-small': `${(1.25 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-kicker': `${(1.32 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-label': `${(1.42 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-chip': `${(1.68 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-body': `${(1.92 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-title': `${(2.05 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-count': `${(2.15 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-assignment': `${(2.65 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-subject': `${(7.35 * safeFontScale).toFixed(3)}cqw`,
+    '--fs-index': `${(18 * safeFontScale).toFixed(3)}cqw`,
   } as CSSProperties;
   const subjectName = cover.subject.name.trim() || 'Untitled Subject';
   const paperCode = cover.subject.code.trim() || '—';
 
   return (
     <article className={`cover-page theme-${settings.theme}`} style={pageStyle}>
+      <div className="cover-texture" aria-hidden="true" />
       <div className="cover-orbit" aria-hidden="true"><span /></div>
       <div className="cover-rule" aria-hidden="true" />
+      <div className="cover-folio" aria-hidden="true"><span>Coursework</span><i />{paperCode}</div>
       <header className="cover-header">
         <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/jis-college-logo.svg`} alt={settings.collegeName || 'College logo'} />
         <div className="academic-chip">Academic year {settings.academicYear || '2025–26'}</div>
       </header>
 
       <section className="cover-hero">
+        <div className="hero-kicker"><span>{settings.stream || 'Stream'}</span><i /><span>Academic dossier</span></div>
         <div className="assignment-label">{settings.assignmentLabel || 'Assignment'}</div>
         <div className="assignment-index">{String(cover.assignment).padStart(2, '0')}</div>
         <h2>{subjectName}</h2>
@@ -145,13 +165,13 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
       </section>
 
       <section className="cover-centerpiece" aria-label="Academic submission details">
-        <div className="center-mark" aria-hidden="true"><span>{(settings.collegeName.trim()[0] || 'J').toUpperCase()}</span><i /></div>
+        <div className="center-mark" aria-hidden="true"><span /><i /><b /></div>
         <div className="center-copy">
           <span>{settings.submissionNote || 'Prepared for academic submission'}</span>
           <strong>{settings.year} · {settings.academicYear || '2025–26'}</strong>
           <small>{settings.stream || 'Stream'} · {settings.collegeName || 'College'}</small>
         </div>
-        <div className="center-count" aria-label={`Assignment number ${cover.assignment}`}>{String(cover.assignment).padStart(2, '0')}</div>
+        <div className="center-count" aria-label={`Assignment number ${cover.assignment}`}><small>No.</small><strong>{String(cover.assignment).padStart(2, '0')}</strong></div>
       </section>
 
       <section className="identity-card" aria-label="Student details">
@@ -172,7 +192,7 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
 
       <footer className="cover-footer">
         <span>{settings.collegeName || 'College'}</span>
-        <span>{settings.assignmentLabel || 'Assignment'} {cover.assignment}</span>
+        <span><i aria-hidden="true" />{settings.assignmentLabel || 'Assignment'} {cover.assignment}</span>
       </footer>
       <div className="cover-watermark" aria-label="COCFUN watermark"><strong>COCFUN</strong><span>cover craft</span></div>
     </article>
@@ -189,9 +209,15 @@ export default function Home() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored) as Partial<Settings>;
+        const isLegacyMargin = typeof parsed.fontScale !== 'number';
+        const migratedMargin = isLegacyMargin
+          ? Math.min(40, 25.4 + Math.max(0, Number(parsed.leftMargin) || 0))
+          : Math.max(12, Math.min(Number(parsed.leftMargin) || 25.4, 40));
         setSettings({
           ...DEFAULTS,
           ...parsed,
+          leftMargin: migratedMargin,
+          fontScale: Math.max(80, Math.min(Number(parsed.fontScale) || 100, 120)),
           subjects: parsed.subjects?.length ? parsed.subjects : DEFAULTS.subjects,
         });
       }
@@ -398,11 +424,23 @@ export default function Home() {
                 <span>Center note</span>
                 <input value={settings.submissionNote} onChange={(event) => update('submissionNote', event.target.value)} placeholder="Prepared for academic submission" />
               </label>
-              <label className="margin-control field-wide">
-                <span><strong>Left binding margin</strong><output>{settings.leftMargin || 0} mm</output></span>
-                <input type="range" min="0" max="18" step="1" value={settings.leftMargin || 0} onChange={(event) => update('leftMargin', Number(event.target.value))} />
-                <small>Moves printed content right without changing the A4 page size.</small>
-              </label>
+              <div className="margin-control field-wide">
+                <span><strong>Left binding margin</strong><output>{settings.leftMargin.toFixed(1).replace('.0', '')} mm{Math.abs(settings.leftMargin - 25.4) < 0.1 ? ' · 1 in' : ''}</output></span>
+                <div className="range-row">
+                  <input type="range" min="12" max="40" step="0.5" value={settings.leftMargin} onChange={(event) => update('leftMargin', Number(event.target.value))} aria-label="Left binding margin in millimetres" />
+                  <button type="button" onClick={() => update('leftMargin', 25.4)} title="Reset to one inch">1″</button>
+                </div>
+                <small>Sets the actual left edge of the printed content. Default: one inch.</small>
+              </div>
+              <div className="type-control field-wide">
+                <span><strong>Master font size</strong><output>{settings.fontScale}%</output></span>
+                <div className="type-slider-row">
+                  <button type="button" onClick={() => update('fontScale', Math.max(80, settings.fontScale - 5))} aria-label="Decrease all cover text">A−</button>
+                  <input type="range" min="80" max="120" step="1" value={settings.fontScale} onChange={(event) => update('fontScale', Number(event.target.value))} aria-label="Master cover font size percentage" />
+                  <button type="button" onClick={() => update('fontScale', Math.min(120, settings.fontScale + 5))} aria-label="Increase all cover text">A+</button>
+                </div>
+                <small>Scales every printed text style together while keeping the visual hierarchy.</small>
+              </div>
             </div>
             <div className="watermark-note"><span>COCFUN</span><p>A tiny, low-contrast watermark is kept intentionally quiet on every page.</p></div>
           </section>
