@@ -48,8 +48,8 @@ const STORAGE_KEY = 'jis-assignment-cover-settings-v1';
 
 const DEFAULTS: Settings = {
   names: 'Abusina Hossain',
-  collegeIds: 'JIS/2025/0611',
-  rolls: '05',
+  collegeIds: '',
+  rolls: '',
   sections: '',
   groups: '',
   stream: 'CSE (AIML)',
@@ -147,10 +147,8 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
 
   return (
     <article className={`cover-page theme-${settings.theme}`} style={pageStyle}>
-      <div className="cover-texture" aria-hidden="true" />
       <div className="cover-orbit" aria-hidden="true"><span /></div>
       <div className="cover-rule" aria-hidden="true" />
-      <div className="cover-folio" aria-hidden="true"><span>Coursework</span><i />{paperCode}</div>
       <header className="cover-header">
         <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/jis-college-logo.svg`} alt={settings.collegeName || 'College logo'} />
         <div className="academic-chip">Academic year {settings.academicYear || '2025–26'}</div>
@@ -165,13 +163,13 @@ function CoverPage({ cover, settings }: { cover: Cover; settings: Settings }) {
       </section>
 
       <section className="cover-centerpiece" aria-label="Academic submission details">
-        <div className="center-mark" aria-hidden="true"><span /><i /><b /></div>
+        <div className="center-index" aria-hidden="true"><span>Assignment</span><strong>{String(cover.assignment).padStart(2, '0')}</strong></div>
         <div className="center-copy">
           <span>{settings.submissionNote || 'Prepared for academic submission'}</span>
           <strong>{settings.year} · {settings.academicYear || '2025–26'}</strong>
           <small>{settings.stream || 'Stream'} · {settings.collegeName || 'College'}</small>
         </div>
-        <div className="center-count" aria-label={`Assignment number ${cover.assignment}`}><small>No.</small><strong>{String(cover.assignment).padStart(2, '0')}</strong></div>
+        <div className="center-meta"><span>Paper code</span><strong>{paperCode}</strong></div>
       </section>
 
       <section className="identity-card" aria-label="Student details">
@@ -213,9 +211,13 @@ export default function Home() {
         const migratedMargin = isLegacyMargin
           ? Math.min(40, 25.4 + Math.max(0, Number(parsed.leftMargin) || 0))
           : Math.max(12, Math.min(Number(parsed.leftMargin) || 25.4, 40));
+        const migratedCollegeIds = parsed.collegeIds === 'JIS/2025/0611' ? '' : (parsed.collegeIds ?? DEFAULTS.collegeIds);
+        const migratedRolls = parsed.rolls === '05' ? '' : (parsed.rolls ?? DEFAULTS.rolls);
         setSettings({
           ...DEFAULTS,
           ...parsed,
+          collegeIds: migratedCollegeIds,
+          rolls: migratedRolls,
           leftMargin: migratedMargin,
           fontScale: Math.max(80, Math.min(Number(parsed.fontScale) || 100, 120)),
           subjects: parsed.subjects?.length ? parsed.subjects : DEFAULTS.subjects,
@@ -312,11 +314,11 @@ export default function Home() {
               </label>
               <label className="field field-wide">
                 <span>College IDs <em>comma separated</em></span>
-                <input value={settings.collegeIds} onChange={(event) => update('collegeIds', event.target.value)} placeholder="JIS/2025/0611, JIS/2025/0612" />
+                <input value={settings.collegeIds} onChange={(event) => update('collegeIds', event.target.value)} placeholder="JIS/2025/0000, JIS/2025/0001" />
               </label>
               <label className="field field-wide">
                 <span>Roll numbers <em>comma separated</em></span>
-                <input value={settings.rolls} onChange={(event) => update('rolls', event.target.value)} placeholder="05, 06" />
+                <input value={settings.rolls} onChange={(event) => update('rolls', event.target.value)} placeholder="01, 02" />
               </label>
               <label className="field">
                 <span>Sections <em>in order</em></span>
