@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 const publicOrigin = process.env.GITHUB_PAGES === 'true'
-  ? 'https://CraftoGamerz.github.io/Assignment-Cover'
+  ? 'https://Abusina007.github.io/Assignment-Cover'
   : 'https://jis-assignment-cover-studio.ashim077.chatgpt.site';
 
 export const metadata: Metadata = {

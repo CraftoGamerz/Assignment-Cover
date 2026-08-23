@@ -12,7 +12,7 @@ const publish = run([
   '--dist',
   'out',
   '--repo',
-  'https://github.com/CraftoGamerz/Assignment-Cover.git',
+  'https://github.com/Abusina007/Assignment-Cover.git',
   '--branch',
   'gh-pages',
   '--dotfiles',

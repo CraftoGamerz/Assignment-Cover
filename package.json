@@ -1,11 +1,11 @@
 {
-  "homepage": "https://CraftoGamerz.github.io/Assignment-Cover/",
+  "homepage": "https://Abusina007.github.io/Assignment-Cover/",
   "name": "sites-project",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/CraftoGamerz/Assignment-Cover.git"
+    "url": "https://github.com/Abusina007/Assignment-Cover.git"
   },
   "engines": {
     "node": ">=22.13.0"
