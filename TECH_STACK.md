@@ -9,8 +9,7 @@
 
 ## Build and deployment
 
-- Vinext `^1.0.0-beta.8` / Vite `^8.2.2` for Sites-compatible builds
-- Next static export when `GITHUB_PAGES=true`
+- Next.js static export when `GITHUB_PAGES=true`
 - `gh-pages` `^6.3.0` publishes `out/` to the `gh-pages` branch
 - GitHub Pages source: `gh-pages` branch, `/` path
 

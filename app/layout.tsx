@@ -12,9 +12,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const publicOrigin = process.env.GITHUB_PAGES === 'true'
-  ? 'https://CraftoGamerz.github.io/Assignment-Cover'
-  : 'https://jis-assignment-cover-studio.ashim077.chatgpt.site';
+const publicOrigin = 'https://CraftoGamerz.github.io/Assignment-Cover';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`${publicOrigin}/`),

@@ -17,6 +17,7 @@ const publish = run([
   'gh-pages',
   '--dotfiles',
   '--nojekyll',
+  '--no-history',
   '--message',
   'Deploy assignment cover generator',
 ]);

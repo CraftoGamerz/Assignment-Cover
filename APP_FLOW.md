@@ -20,4 +20,4 @@
 - Multiple metadata values: match values by comma-list order.
 - Missing personal metadata: render an em dash on the cover; do not seed private data.
 - Legacy saved JIS ID and roll examples: remove them on load.
-- GitHub Pages unavailable for the selected repository visibility: the repository owner must enable Pages eligibility or use the existing independent host.
+- GitHub Pages unavailable for the selected repository visibility: the repository owner must enable Pages eligibility or change the repository visibility.

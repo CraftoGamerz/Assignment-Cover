@@ -14,21 +14,23 @@ JIS Assignment Cover Studio creates polished, print-ready A4 assignment front pa
 
 ## Current request
 
-- Publish the current `main` branch to `CraftoGamerz/Assignment-Cover`.
-- Serve the static build from the `gh-pages` branch at the GitHub Pages URL.
-- Attribute new repository commits to Abusina Hossain, never a generic agent identity.
+- Remove unused alternate-hosting and build-tool configuration.
+- Keep the project as a plain Next.js static export published to `CraftoGamerz/Assignment-Cover`.
+- Re-author the published Git history so `CraftoGamerz` is the sole displayed author and committer.
 
 ## Constraints
 
 - Preserve the existing app behavior and user-owned settings.
 - Keep the repository URL and generated metadata aligned with the active GitHub Pages account.
 - GitHub Pages requires a repository/account plan that permits Pages for the repository visibility selected by the owner.
+- Rewriting history changes commit IDs and requires force-pushing `main` and `gh-pages`.
 
 ## Success criteria
 
 - `main` and `gh-pages` are pushed to `CraftoGamerz/Assignment-Cover`.
 - GitHub Pages returns the app HTML and stylesheet successfully.
-- The latest implementation commit shows Abusina Hossain as author.
+- No tracked source/configuration references the removed alternate hosting platform or unused build tooling.
+- Published `main` and `gh-pages` history shows CraftoGamerz as author and committer.
 
 ## Current deployment
 
