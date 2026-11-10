@@ -12,5 +12,5 @@
 - [x] **4.1** `done` — Update project records for standalone GitHub Pages cleanup.
 - [x] **4.2** `done` — Remove tracked hosting tooling and unused dependencies.
 - [x] **4.3** `done` — Validate the plain Next.js static export.
-- [ ] **4.4** `in progress` — Re-author and force-push published history as CraftoGamerz.
-- [ ] **4.5** `pending` — Verify public GitHub Pages assets.
+- [x] **4.4** `done` — Re-author and force-push published history as CraftoGamerz.
+- [ ] **4.5** `in progress` — Verify public GitHub Pages assets.
