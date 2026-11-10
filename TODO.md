@@ -4,8 +4,8 @@
 - [x] **2.1** `done` — Update GitHub Pages metadata and deployment repository.
 - [x] **2.2** `done` — Set Abusina Hossain as the local Git author.
 - [x] **2.3** `done` — Switch `origin` to CraftoGamerz while preserving the existing destination remote.
-- [ ] **2.4** `in progress` — Commit and push `main`.
-- [ ] **2.5** `pending` — Publish the GitHub Pages static build.
-- [ ] **3.1** `pending` — Verify remote branches.
-- [ ] **3.2** `pending` — Verify deployed HTML and CSS.
-- [ ] **3.3** `pending` — Record the final public URL.
+- [x] **2.4** `done` — Commit and push `main`.
+- [x] **2.5** `done` — Publish the GitHub Pages static build.
+- [x] **3.1** `done` — Verify remote `main` and `gh-pages` branches.
+- [x] **3.2** `done` — Verify deployed HTML and CSS return HTTP 200.
+- [x] **3.3** `done` — Record the CraftoGamerz GitHub Pages URL.

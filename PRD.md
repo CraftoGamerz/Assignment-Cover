@@ -30,6 +30,11 @@ JIS Assignment Cover Studio creates polished, print-ready A4 assignment front pa
 - GitHub Pages returns the app HTML and stylesheet successfully.
 - The latest implementation commit shows Abusina Hossain as author.
 
+## Current deployment
+
+- GitHub Pages: `https://craftogamerz.github.io/Assignment-Cover/`
+- Source repository: `https://github.com/CraftoGamerz/Assignment-Cover`
+
 ## Out of scope
 
 - Changing repository privacy or GitHub billing/plan settings.
